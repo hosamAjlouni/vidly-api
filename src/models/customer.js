@@ -35,6 +35,7 @@ module.exports = (sequelize) => {
     {
       sequelize,
       modelName: "customer",
+      timestamps: false
     }
   );
   return Customer;

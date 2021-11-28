@@ -4,7 +4,10 @@ const BaseModel = require("./baseModel");
 module.exports = (sequelize) => {
   class Movie extends BaseModel {
     static associate(models) {
-      this.belongsTo(models.genre);
+      this.belongsTo(models.genre, {
+        allowNull: false,
+        include: true
+      });
       this.hasMany(models.rental);
     }
   }
@@ -19,7 +22,7 @@ module.exports = (sequelize) => {
           len: [0, 255],
         },
       },
-      stock: {
+      numberInStock: {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
@@ -37,6 +40,10 @@ module.exports = (sequelize) => {
     {
       sequelize,
       modelName: "movie",
+      defaultScope: {
+        include: "genre"
+      },
+      timestamps: false
     }
   );
 

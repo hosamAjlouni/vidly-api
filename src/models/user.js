@@ -40,6 +40,7 @@ module.exports = (sequelize) => {
       defaultScope: {
         attributes: { exclude: ["password"] },
       },
+      timestamps: false
     }
   );
   return User;

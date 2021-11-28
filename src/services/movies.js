@@ -13,6 +13,7 @@ const get = async (id) => {
 };
 
 const create = async (body) => {
+  console.log("+++++++", body)
   const movie = await db.movie.create(body);
   return movie;
 };

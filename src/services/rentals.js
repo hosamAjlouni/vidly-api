@@ -16,7 +16,7 @@ const create = async (body) => {
   try {
     return await db.sequelize.transaction(async (t) => {
       const rental = await db.rental.create(body, { transaction: t });
-      await (await rental.getMovie()).decrement("stock", { transaction: t });
+      await (await rental.getMovie()).decrement("numberInStock", { transaction: t });
     });
   } catch (error) {
     throw error;
@@ -29,7 +29,7 @@ const returnRental = async (id) => {
   try {
     return await db.sequelize.transaction(async (t) => {
       await rental.update({ dateReturned: new Date() }, { transaction: t });
-      await (await rental.getMovie()).increment("stock", { transaction: t });
+      await (await rental.getMovie()).increment("numberInStock", { transaction: t });
       return rental;
     });
   } catch (error) {

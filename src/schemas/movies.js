@@ -30,7 +30,7 @@ const movieSchema = {
       errorMessage: "should be an integer.",
     },
   },
-  stock: {
+  numberInStock: {
     exists: {
       errorMessage: "should exist",
     },

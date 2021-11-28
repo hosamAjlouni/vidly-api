@@ -4,7 +4,7 @@ const db = require("../models");
 const create = async (req, res, next) => {
   const errors = [];
 
-  const isMovieAvailable = !!(await db.movie.findByPk(req.body.movieId)).stock;
+  const isMovieAvailable = !!(await db.movie.findByPk(req.body.movieId)).numberInStock;
   if (!isMovieAvailable)
     errors.push({ param: "movieId", msg: "movie is out of stock." });
 

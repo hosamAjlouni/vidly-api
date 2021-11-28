@@ -15,12 +15,13 @@ module.exports = (sequelize) => {
         allowNull: false,
         validate: {
           len: [5, 255],
-        },
+        }
       },
     },
     {
       sequelize,
       modelName: "genre",
+      timestamps: false
     }
   );
   return Genre;
