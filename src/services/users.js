@@ -7,9 +7,11 @@ const bcrypt = require("bcrypt");
 
 const signup = async (body) => {
   body.password = await bcrypt.hash(body.password, 10);
-  const user = await db.user.create(body);
+  let user = await db.user.create(body);
   await user.reload();
-  return user;
+  user = _.pick(user, ["id", "email", "name", "isAdmin"]);
+  const token = jwt.sign(user, config.get("jwtPrivateKey"));
+  return {user, token};
 };
 
 const login = async (body) => {
@@ -17,13 +19,13 @@ const login = async (body) => {
     where: { email: body.email },
     attributes: { exclude: null },
   });
-  if (!user) throw new HttpError("Invalid Credentials.", 404);
+  if (!user) throw new HttpError("Invalid Email or Password.", 404);
   
   const passIsCorrect = await bcrypt.compare(body.password, user.password);
-  if (!passIsCorrect) throw new HttpError("Invalid Credentials.", 404);
+  if (!passIsCorrect) throw new HttpError("Invalid Email or Password.", 404);
 
-  user = _.pick(user, ["id", "email"]);
-  let token = jwt.sign(user, config.get("jwtPrivateKey"));
+  user = _.pick(user, ["id", "email", "name", "isAdmin"]);
+  const token = jwt.sign(user, config.get("jwtPrivateKey"));
   return { user, token };
 };
 

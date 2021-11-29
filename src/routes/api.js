@@ -10,8 +10,8 @@ const authenticationRequired = require("../middleware/authenticationRequired");
 
 router.use("/users", users);
 router.use("/test",authenticationRequired , test);
-router.use("/movies",authenticationRequired , movies);
-router.use("/genres",authenticationRequired , genres);
+router.use("/movies", movies);
+router.use("/genres", genres);
 router.use("/customers",authenticationRequired , customers);
 router.use("/rentals",authenticationRequired , rentals);
 

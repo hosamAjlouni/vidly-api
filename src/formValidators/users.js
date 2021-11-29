@@ -16,7 +16,7 @@ const login = async (req, res, next) => {
   const user = await db.user.findOne({
     where: { email: req.body.email },
   });
-  if (!user) throw new HttpError("Invalid Credentials", 400);
+  if (!user) throw new HttpError("Invalid Email or Password", 400);
 
   const errors = [];
   if (!!errors.length) throw new HttpError(errors, 400);
